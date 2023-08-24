@@ -1,13 +1,20 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.viewmodels.PostModel
+import com.example.myapplication.Api.ApiClient
+import com.example.myapplication.Api.ApiInterface
+import com.example.myapplication.ViewModel.PostViewModel
+import com.example.myapplication.model.PostModel
+import com.google.android.gms.common.api.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class PostRepository {
-    private lateinit var repository: PostRepository
-    private val API_URL = "https://jsonplaceholder.typicode.com/posts"
-    private val API_BASE_URL = "https://jsonplaceholder.typicode.com"
-    private var posts: MutableList<PostModel> = mutableListOf()
+    val apiClient =ApiClient.buildClient(ApiInterface::class.java)
+
+ suspend fun getPosts(): retrofit2.Response<List<PostModel>> {
+     return  withContext(Dispatchers.IO){
+         apiClient.getPosts()
+     }
+ }
 
 }
